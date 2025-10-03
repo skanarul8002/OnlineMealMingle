@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import {
@@ -27,6 +27,7 @@ const validationSchema = Yup.object({
 });
 
 const LoginForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleSubmit = (values) => {
@@ -59,18 +60,31 @@ const LoginForm = () => {
               autoComplete="email"
               helperText={<ErrorMessage name="email" />}
             />
-            <Field
-              as={TextField}
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              label="Password"
-              name="password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              helperText={<ErrorMessage name="password" />}
-            />
+            <div style={{ position: "relative" }}>
+              <Field
+                as={TextField}
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                label="Password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                id="password"
+                autoComplete="current-password"
+                helperText={<ErrorMessage name="password" />}
+                InputProps={{
+                  endAdornment: (
+                    <span
+                      style={{ cursor: "pointer", position: "absolute", right: 10, top: 18 }}
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                    >
+                      {showPassword ? "👁️" : "👁️‍🗨️"}
+                    </span>
+                  ),
+                }}
+              />
+            </div>
             <Button
               type="submit"
               fullWidth
