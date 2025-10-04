@@ -1,7 +1,9 @@
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider as MuiThemeProvider } from "@mui/material";
 import "./App.css";
 
 import darkTheme from "./theme/DarkTheme";
+import lightTheme from "./theme/LightTheme";
+import { ThemeProvider, useTheme } from "./theme/ThemeContext";
 import Routers from "./Routers/Routers";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -13,13 +15,13 @@ import {
   getRestaurantByUserId,
 } from "./State/Customers/Restaurant/restaurant.action";
 
-function App() {
+function AppContent() {
   const dispatch = useDispatch();
   const { auth } = useSelector((store) => store);
   const jwt = localStorage.getItem("jwt");
+  const { isDarkMode } = useTheme();
   
   useEffect(() => {
-    
     if (jwt) {
       dispatch(getUser(jwt));
       dispatch(findCart(jwt));
@@ -32,10 +34,19 @@ function App() {
       dispatch(getRestaurantByUserId(auth.jwt || jwt));
     }
   }, [auth.user]);
+  
   return (
-    <ThemeProvider theme={darkTheme}>
+    <MuiThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <CssBaseline />
       <Routers />
+    </MuiThemeProvider>
+  );
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
     </ThemeProvider>
   );
 }

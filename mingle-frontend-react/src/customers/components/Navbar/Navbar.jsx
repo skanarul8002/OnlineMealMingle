@@ -16,6 +16,7 @@ import Auth from "../../pages/Auth/Auth";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../State/Authentication/Action";
 import { pink } from "@mui/material/colors";
+import ThemeToggle from "../../../theme/ThemeToggle";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -81,6 +82,7 @@ const Navbar = () => {
             <SearchIcon sx={{ fontSize: "1.5rem" }} />
           </IconButton>
         </div>
+        <ThemeToggle />
         <div className="flex items-center space-x-2">
           {auth.user?.fullName ? (
             <span

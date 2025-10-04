@@ -9,6 +9,7 @@ import { useState } from "react";
 import { logout } from "../State/Authentication/Action";
 import Auth from "../customers/pages/Auth/Auth";
 import { IconButton } from "@mui/material";
+import ThemeToggle from "../theme/ThemeToggle";
 
 const AdminNavbar = ({ handleOpenSideBar }) => {
   const navigate = useNavigate();
@@ -27,6 +28,9 @@ const AdminNavbar = ({ handleOpenSideBar }) => {
           </li>
         </div>
         {/* <li className="font font-semibold">Home</li> */}
+      </div>
+      <div className="flex items-center">
+        <ThemeToggle />
       </div>
     </div>
   );
