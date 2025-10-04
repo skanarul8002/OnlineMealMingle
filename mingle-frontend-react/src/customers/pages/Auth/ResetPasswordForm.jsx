@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { TextField, Button } from "@mui/material";
@@ -16,6 +16,8 @@ const validationSchema = Yup.object().shape({
 });
 
 function ResetPasswordForm() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -47,14 +49,25 @@ function ResetPasswordForm() {
       >
         <Form className="space-y-5">
           <div className="space-y-5">
-            <div>
+            <div style={{ position: "relative" }}>
               <Field
                 as={TextField}
                 name="password"
                 placeholder="Password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 variant="outlined"
                 fullWidth
+                InputProps={{
+                  endAdornment: (
+                    <span
+                      style={{ cursor: "pointer", position: "absolute", right: 10, top: 18 }}
+                      onClick={() => setShowPassword((prev) => !prev)}
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                    >
+                      {showPassword ? "👁️" : "👁️‍🗨️"}
+                    </span>
+                  ),
+                }}
               />
               <ErrorMessage
                 name="password"
@@ -62,14 +75,25 @@ function ResetPasswordForm() {
                 className="text-red-500"
               />
             </div>
-            <div>
+            <div style={{ position: "relative" }}>
               <Field
                 as={TextField}
                 name="confirmedPassword"
                 placeholder="Confirmed Password"
-                type="password"
+                type={showConfirmedPassword ? "text" : "password"}
                 variant="outlined"
                 fullWidth
+                InputProps={{
+                  endAdornment: (
+                    <span
+                      style={{ cursor: "pointer", position: "absolute", right: 10, top: 18 }}
+                      onClick={() => setShowConfirmedPassword((prev) => !prev)}
+                      aria-label={showConfirmedPassword ? "Hide password" : "Show password"}
+                    >
+                      {showConfirmedPassword ? "👁️" : "👁️‍🗨️"}
+                    </span>
+                  ),
+                }}
               />
               <ErrorMessage
                 name="confirmedPassword"
