@@ -1,21 +1,28 @@
 import {
-  ADD_TO_FAVORITES_FAILURE,
-  ADD_TO_FAVORITES_REQUEST,
-  ADD_TO_FAVORITES_SUCCESS,
-  GET_USER_FAILURE,
-  GET_USER_REQUEST,
-  GET_USER_SUCCESS,
-  LOGIN_FAILURE,
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGOUT,
-  REGISTER_FAILURE,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
-  REQUEST_RESET_PASSWORD_FAILURE,
+  REGISTER_FAILURE,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  GET_USER_REQUEST,
+  GET_USER_SUCCESS,
+  GET_USER_FAILURE,
+  LOGOUT,
+  ADD_TO_FAVORITES_REQUEST,
+  ADD_TO_FAVORITES_SUCCESS,
+  ADD_TO_FAVORITES_FAILURE,
   REQUEST_RESET_PASSWORD_REQUEST,
   REQUEST_RESET_PASSWORD_SUCCESS,
+  REQUEST_RESET_PASSWORD_FAILURE,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILURE,
+  UPDATE_USER_PROFILE_REQUEST,
+  UPDATE_USER_PROFILE_SUCCESS,
+  UPDATE_USER_PROFILE_FAILURE,
 } from "./ActionType";
+
 import { API_URL, api } from "../../config/api";
 import axios from "axios";
 
@@ -149,5 +156,22 @@ export const logout = () => {
   };
 };
 
-
-
+export const updateUserProfile = (data, jwt) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_USER_PROFILE_REQUEST });
+    const response = await axios.put(
+      `${API_URL}/users/profile`,
+      data,
+      {
+        headers: { Authorization: `Bearer ${jwt}` },
+      }
+    );
+    const updatedUser = response.data;
+    dispatch({ type: UPDATE_USER_PROFILE_SUCCESS, payload: updatedUser });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_USER_PROFILE_FAILURE,
+      payload: error.response?.data?.message || error.message,
+    });
+  }
+};

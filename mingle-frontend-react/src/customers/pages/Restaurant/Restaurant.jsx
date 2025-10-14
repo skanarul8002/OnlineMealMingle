@@ -53,13 +53,13 @@ const Restaurant = () => {
   useEffect(() => {
     dispatch(
       getRestaurantById({
-        jwt: localStorage.getItem("jwt"),
+        jwt,
         restaurantId: id,
       })
     );
     dispatch(
       getMenuItemsByRestaurantId({
-        jwt: localStorage.getItem("jwt"),
+        jwt,
         restaurantId: id,
         seasonal: foodType === "seasonal",
         vegetarian: foodType === "vegetarian",
@@ -68,7 +68,8 @@ const Restaurant = () => {
       })
     );
     dispatch(getRestaurantsCategory({ restaurantId: id, jwt }));
-  }, [id, foodType, foodCategory]);
+  }, [dispatch, id, foodType, foodCategory, jwt]);
+
 
   const handleFilter = (e, value) => {
     const searchParams = new URLSearchParams(location.search);
