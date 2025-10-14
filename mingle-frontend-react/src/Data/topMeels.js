@@ -44,7 +44,7 @@ export const topMeels=[
     ,
     {
         image:"https://images.pexels.com/photos/2313686/pexels-photo-2313686.jpeg?auto=compress&cs=tinysrgb&w=600",
-        title:"Chiken"
+        title:"Chicken"
     },
     {
         image:"https://images.pexels.com/photos/2764905/pexels-photo-2764905.jpeg?auto=compress&cs=tinysrgb&w=600",
